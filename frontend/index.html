@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered real-time driver drowsiness detection using CNN and webcam">
+    <title>AI Driver Drowsiness Detection System</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header__badge">
+                <span class="dot"></span>
+                AI-Powered Detection
+            </div>
+            <h1 class="header__title">Driver Drowsiness Detection</h1>
+            <p class="header__subtitle">Real-time eye state monitoring with deep learning</p>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="main-grid">
+            <!-- Left: Video Feed -->
+            <div>
+                <div class="card">
+                    <div class="card__header">
+                        <span class="card__title">
+                            <span class="card__title-icon">📹</span>
+                            Live Camera Feed
+                        </span>
+                        <span class="fps-display" id="fpsText" style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">-- FPS</span>
+                    </div>
+                    <div class="card__body" style="padding:12px;">
+                        <div class="video-container" id="videoContainer">
+                            <video id="webcam" autoplay playsinline muted></video>
+                            <canvas id="captureCanvas"></canvas>
+
+                            <!-- Badges on video -->
+                            <div class="video-badge" id="videoBadge" style="display:none;">
+                                <span class="rec-dot"></span>
+                                LIVE
+                            </div>
+                            <div class="fps-badge" id="fpsBadge" style="display:none;">-- FPS</div>
+
+                            <!-- Drowsiness Alert Overlay -->
+                            <div class="alert-overlay" id="alertOverlay">
+                                <div class="alert-overlay__icon">⚠️</div>
+                                <div class="alert-overlay__text">DROWSINESS DETECTED</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Controls -->
+                    <div class="controls">
+                        <button class="btn btn--start" id="btnStart" onclick="startDetection()">
+                            ▶ Start Detection
+                        </button>
+                        <button class="btn btn--stop" id="btnStop" onclick="stopDetection()" disabled>
+                            ◼ Stop
+                        </button>
+                        <button class="btn" id="btnReset" onclick="resetTracker()">
+                            ↺ Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Sidebar -->
+            <div class="sidebar">
+                <!-- Status Card -->
+                <div class="card">
+                    <div class="card__header">
+                        <span class="card__title">
+                            <span class="card__title-icon">👁️</span>
+                            Eye Status
+                        </span>
+                    </div>
+                    <div class="status-display">
+                        <div class="status-indicator state-idle" id="statusIndicator">
+                            <span id="statusEmoji">😐</span>
+                        </div>
+                        <div class="status-label" id="statusLabel">Idle</div>
+                        <div class="status-sublabel" id="statusSublabel">Start detection to begin monitoring</div>
+                    </div>
+                    <!-- Confidence Bar -->
+                    <div class="confidence-bar">
+                        <div class="confidence-bar__header">
+                            <span class="confidence-bar__label">Model Confidence</span>
+                            <span class="confidence-bar__value" id="confidenceValue">0%</span>
+                        </div>
+                        <div class="confidence-bar__track">
+                            <div class="confidence-bar__fill" id="confidenceFill"></div>
+                        </div>
+                    </div>
+                    <!-- Metrics -->
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric__value" id="metricClosedFrames">0</div>
+                            <div class="metric__label">Closed Frames</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric__value" id="metricThreshold">20</div>
+                            <div class="metric__label">Threshold</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drowsiness Score Card -->
+                <div class="card">
+                    <div class="card__header">
+                        <span class="card__title">
+                            <span class="card__title-icon">📊</span>
+                            Drowsiness Score
+                        </span>
+                    </div>
+                    <div class="score-section">
+                        <div class="score-ring">
+                            <svg viewBox="0 0 128 128">
+                                <circle class="score-ring__bg" cx="64" cy="64" r="56"></circle>
+                                <circle class="score-ring__fill" id="scoreRingFill" cx="64" cy="64" r="56"></circle>
+                            </svg>
+                            <div class="score-ring__value">
+                                <div class="score-ring__number" id="scoreNumber">0</div>
+                                <div class="score-ring__label">Risk Level</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Log Card -->
+                <div class="card">
+                    <div class="card__header">
+                        <span class="card__title">
+                            <span class="card__title-icon">📋</span>
+                            Event Log
+                        </span>
+                    </div>
+                    <div class="event-log" id="eventLog">
+                        <div class="event-log__empty">No events yet. Start detection to begin.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            AI Driver Drowsiness Detection System &middot; Built with TensorFlow, OpenCV & FastAPI
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
