@@ -6,6 +6,8 @@ A real-time driver drowsiness detection system that uses a CNN deep learning mod
 > 
 > 🔗 **Current Version Repository**: [Priyanshu-Priya/Driver-Drowsiness-Detection-System](https://github.com/Priyanshu-Priya/Driver-Drowsiness-Detection-System)
 
+> 📓 **Model Training Notebook**: [Kaggle Notebook](https://www.kaggle.com/code/PriyanshuPriyaLabs/ai-driver-drowsiness-detection-system)
+
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?logo=tensorflow)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi)
